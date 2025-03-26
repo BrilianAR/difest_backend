@@ -20,6 +20,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
+            'role' => 'sometimes|in:user,admin,juri',
         ], [
             'name.required' => 'Name is required.',
             'email.required' => 'Email is required.',
@@ -37,6 +38,8 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $request->input('role', 'user'),
+            'tahap_user' => $request->tahap_user ?? 'Tidak Terverifikasi'
         ]);
 
         $token = JWTAuth::fromUser($user);
