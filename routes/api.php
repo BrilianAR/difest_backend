@@ -22,8 +22,32 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::apiResource('informasi', InformasiController::class);
 Route::apiResource('users', UserController::class);
 Route::apiResource('lomba', LombaController::class);
-Route::apiResource('pembayaran', PembayaranController::class);
-Route::apiResource('pendaftaran', PendaftaranController::class);
+
+// Route API Pembayaran
+Route::prefix('pembayaran')->group(function () {
+    Route::apiResource('/', PembayaranController::class);
+
+    Route::get('/{Pembayaran}', [PembayaranController::class, 'show']);
+    Route::post('/{Pembayaran}', [PembayaranController::class, 'update']);
+    Route::delete('/{Pembayaran}', [PembayaranController::class, 'destroy']);
+
+});
+
+// Route API Pendaftaran
+Route::prefix('pendaftaran')->group(function () {
+    Route::apiResource('/', PendaftaranController::class);
+
+    Route::post('/registrasi-1', [PendaftaranController::class, 'registrasiKetua']);
+    Route::post('/registrasi-2', [PendaftaranController::class, 'registrasiAnggota']);
+    Route::post('/registrasi-3', [PendaftaranController::class, 'registrasiPembayaran']);
+    Route::post('/registrasi-4', [PendaftaranController::class, 'registrasiBuktiFollow']);
+    
+    Route::get('/{id}', [PendaftaranController::class, 'show']);
+    Route::post('/{id}', [PendaftaranController::class, 'update']);
+    Route::delete('/{id}', [PendaftaranController::class, 'destroy']);
+
+});
+
 Route::apiResource('karya', KaryaController::class);
 Route::apiResource('kriteria', KriteriaController::class);
 Route::apiResource('daftarKriteria', DaftarKriteriaController::class);

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('pendaftaran_id');
             $table->integer('harga');
             $table->string('bukti_pembayaran');
+            $table->enum('status', ['diterima', 'ditolak', 'proses'])->default('proses');
             $table->timestamps();
 
             // Foreign key constraint

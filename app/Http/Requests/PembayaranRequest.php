@@ -22,10 +22,10 @@ class PembayaranRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|string|max:20|unique:pembayarans,id',
-            'pendaftaran_id' => 'required|exists:pendaftaran,id',
-            'harga' => 'required|integer|min:0',
-            'bukti_pembayaran' => 'required|string'
+            'id' => 'sometimes|string|max:20|unique:pembayarans,id',
+            'pendaftaran_id' => 'required|exists:pendaftarans,id',
+            'harga' => 'sometimes|integer|min:0',
+            'bukti_pembayaran' => 'required|file|mimes:jpg,jpeg,png|max:2048'
         ];
     }
 }

@@ -20,18 +20,21 @@ return new class extends Migration
             $table->string('no_hp', 15);
             $table->string('asal_institusi');
             $table->string('kartu_identitas_ketua'); // Path ke file KTP/Kartu Pelajar
+            $table->string('nama_team')->nullable();
 
             for ($i = 1; $i <= 4; $i++) {
                 $table->string("nama_anggota_$i")->nullable();
                 $table->string("asal_institusi_anggota_$i")->nullable();
                 $table->string("kartu_identitas_anggota_$i")->nullable(); // Path ke file KTP/Kartu Pelajar
             }
+            // Bukti Pembayaran
+            $table->string('bukti_pembayaran')->nullable();
 
             // Bukti follow/screenshot media sosial
-            $table->string('bukti_follow_ig_difest');
-            $table->string('bukti_follow_ig_himatikom');
-            $table->string('bukti_follow_tiktok_difest');
-            $table->string('bukti_subscribe_youtube_himatikom');
+            $table->string('bukti_follow_ig_difest')->nullable();
+            $table->string('bukti_follow_ig_himatikom')->nullable();
+            $table->string('bukti_follow_tiktok_difest')->nullable();
+            $table->string('bukti_subscribe_youtube_himatikom')->nullable();
 
             $table->timestamps();
 

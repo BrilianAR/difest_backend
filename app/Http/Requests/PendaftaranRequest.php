@@ -29,6 +29,7 @@ class PendaftaranRequest extends FormRequest
             'no_hp' => 'required|string|max:15',
             'asal_institusi' => 'required|string|max:255',
             'kartu_identitas_ketua' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'bukti_pembayaran' => 'required|file|mimes:jpg,jpeg,png|max:2048',
             'bukti_follow_ig_difest' => 'required|file|mimes:jpg,jpeg,png|max:2048',
             'bukti_follow_ig_himatikom' => 'required|file|mimes:jpg,jpeg,png|max:2048',
             'bukti_follow_tiktok_difest' => 'required|file|mimes:jpg,jpeg,png|max:2048',
@@ -50,6 +51,7 @@ class PendaftaranRequest extends FormRequest
     {
         return [
             'kartu_identitas_ketua.required' => 'Kartu identitas ketua harus diunggah.',
+            'bukti_pembayaran.required' => 'Bukti Pembayaran harus diunggah.',
             'bukti_follow_ig_difest.required' => 'Bukti follow IG Difest harus diunggah.',
             'email.unique' => 'Email ini sudah terdaftar.',
         ];

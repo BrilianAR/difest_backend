@@ -18,12 +18,13 @@ class Pembayaran extends Model
         'id',
         'pendaftaran_id',
         'harga',
-        'bukti_pembayaran'
+        'bukti_pembayaran',
+        'status',
     ];
 
     // Relasi ke tabel pendaftaran
     public function pendaftaran()
     {
-        return $this->belongsTo(Pendaftaran::class, 'pendaftaran_id');
+        return $this->belongsTo(Pendaftaran::class, 'pendaftaran_id', );
     }
 }

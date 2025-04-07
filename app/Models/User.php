@@ -17,6 +17,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array<int, string>
      */
+    // name boleh null dan tambahkan kolom gambar (profile)
     protected $fillable = [
         'name',
         'email',
