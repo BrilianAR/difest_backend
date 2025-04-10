@@ -16,7 +16,7 @@ return new class extends Migration
             $table->decimal('nilai');
             $table->foreignId('karya_id')->references('id')->on('hasil_karya')->onDelete('cascade');
             $table->foreignId('daftar_kriteria_id')->references('id')->on('daftar_kriterias')->onDelete('cascade');
-            $table->foreignId('juri_id')->references('id')->on('juris')->onDelete('cascade');
+            $table->foreignId('juri_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('kriterias', function (Blueprint $table) {
             $table->id();
             $table->text('nama')->nullable();
+            $table->integer('presentase')->nullable();
             $table->timestamps();
         });
     }

@@ -26,11 +26,11 @@ class LombaRequest extends FormRequest
             'nama_lomba' => 'required|string',
             'deskripsi' => 'required',
             'harga' => 'required|integer',
-            'no_pj' => 'required|integer',
+            'no_pj' => 'required|string',
             'jenis_pengumpulan' => 'required',
             'jenis_lomba' => 'required',
             'kategori_lomba' => 'required',
-            'logo_lomba' => 'nullable|image|mimes:jpeg,png,jpg',
+            'logo_lomba' => 'nullable|mimes:jpeg,png,jpg',
         ];
     }
 }

@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
             'email' => 'nullable|email|unique:users,email',
             'password' => 'nullable|min:6',
             'role' => 'required|string',
-            'tahap_user' => 'nullable|string',
+            'tahap_user' => 'nullable|in:Tidak Terverifikasi,Registrasi-1,Pendaftaran,Pengumpulan Karya,Tuntas,Registrasi-2,Registrasi-3',
         ];
     }
 }

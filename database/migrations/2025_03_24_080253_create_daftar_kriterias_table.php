@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('kriteria_id')->constrained('kriterias')->onDelete('cascade');
             $table->foreignId('lomba_id')->constrained('lomba')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->enum('jenis_kriteria', ['normal', 'presentasi']);
             $table->timestamps();
         });
     }

@@ -25,26 +25,7 @@ class PenilaianRequest extends FormRequest
             'nilai' => 'required|numeric|min:0|max:100',
             'karya_id' => 'required|exists:hasil_karya,id',
             'daftar_kriteria_id' => 'required|exists:daftar_kriterias,id',
-            'juri_id' => 'required|exists:juris,id'
-        ];
-    }
-
-    /**
-     * Pesan error custom
-     */
-    public function messages(): array
-    {
-        return [
-            'nilai.required' => 'Nilai wajib diisi.',
-            'nilai.numeric' => 'Nilai harus berupa angka.',
-            'nilai.min' => 'Nilai tidak boleh kurang dari 0.',
-            'nilai.max' => 'Nilai tidak boleh lebih dari 100.',
-            'karya_id.required' => 'Karya wajib dipilih.',
-            'karya_id.exists' => 'Karya tidak valid.',
-            'daftar_kriteria_id.required' => 'Kriteria wajib dipilih.',
-            'daftar_kriteria_id.exists' => 'Kriteria tidak valid.',
-            'juri_id.required' => 'Juri wajib dipilih.',
-            'juri_id.exists' => 'Juri tidak valid.',
+            'juri_id' => 'required|exists:users,id'
         ];
     }
 }

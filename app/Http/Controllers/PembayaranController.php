@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PembayaranRequest;
 use App\Models\Pembayaran;
-use Illuminate\Http\Request;
+use App\Models\Pendaftaran;
+use App\Models\User;
 
 class PembayaranController extends Controller
 {
     public function index()
     {
 
-        $Pembayaran = Pembayaran::all();
+        $Pembayaran = Pembayaran::with('pendaftaran', 'pendaftaran.lomba')->get();
 
         if ($Pembayaran->isEmpty()) {
             return response()->json(['message' => 'No data found'], 404);
@@ -20,67 +21,92 @@ class PembayaranController extends Controller
         return response()->json([
             'status' => 'success',
 
-            'data' => $Pembayaran
+            'data' => $Pembayaran,
         ], 200);
     }
-
 
     public function store(PembayaranRequest $request)
     {
         $data = $request->validated();
 
+        // Ambil tanggal & id pendaftaran
+        $today = now()->format('Ymd');
+        $pendaftaranId = $data['pendaftaran_id'];
+
+        // Buat ID pembayaran
+        $data['id'] = 'BYR-' . $today . '-' . $pendaftaranId;
+
+        // Ambil harga dari lomba
+        $pendaftaran = Pendaftaran::with('lomba')->findOrFail($pendaftaranId);
+        $data['harga'] = $pendaftaran->lomba->harga;
+
+        // Upload file bukti pembayaran
         if ($request->hasFile('bukti_pembayaran')) {
             $imageName = time() . '_' . $request->file('bukti_pembayaran')->getClientOriginalName();
             $request->file('bukti_pembayaran')->move(public_path('uploads/bukti_pembayaran'), $imageName);
             $data['bukti_pembayaran'] = 'uploads/bukti_pembayaran/' . $imageName;
         }
 
-        $Pembayaran = Pembayaran::create($data);
+        $pembayaran = Pembayaran::create($data);
+
         return response()->json([
-            'message' => 'Pembayaran updated successfully',
+            'message' => 'Pembayaran berhasil dibuat!',
             'status' => 'success',
-            'data' => $Pembayaran
+            'data' => $pembayaran,
         ], 200);
     }
 
-    // public function show(Pembayaran $Pembayaran)
-    // {
-    //     return response()->json($Pembayaran, 200);
-    // }
+    public function show(Pembayaran $Pembayaran)
+    {
+        $pendaftaran = Pembayaran::findOrFail($Pembayaran->id); // Menemukan pembayaran berdasarkan ID
+        return response()->json([
+            'status' => 'success',
+            'data' => $pendaftaran,
+        ], 200);
+    }
 
-    // public function update(PembayaranRequest $request, Pembayaran $Pembayaran)
-    // {
-    //     $data = $request->validated();
+    public function update(PembayaranRequest $request, Pembayaran $Pembayaran)
+    {
+        $pembayaran = Pembayaran::findOrFail($Pembayaran->id);
 
-    //     // Hapus bukti_pembayaran lama jika ada bukti_pembayaran baru
-    //     if ($request->hasFile('bukti_pembayaran')) {
-    //         if ($Pembayaran->bukti_pembayaran && file_exists(public_path($Pembayaran->bukti_pembayaran))) {
-    //             unlink(public_path($Pembayaran->bukti_pembayaran)); // Hapus bukti_pembayaran lama
-    //         }
-    //         $imageName = time() . '_' . $request->file('bukti_pembayaran')->getClientOriginalName();
-    //         $request->file('bukti_pembayaran')->move(public_path('uploads/bukti_pembayaran'), $imageName);
-    //         $data['bukti_pembayaran'] = 'uploads/bukti_pembayaran/' . $imageName;
-    //     }
+        $validated = $request->validate([
+            'user_id' => 'required|exists:pendaftarans,user_id',
+            'status' => 'required|string',
+        ]);
 
-    //     $Pembayaran->update($data);
-
-    //     return response()->json([
-    //         'message' => 'Pembayaran updated successfully',
-    //         'status' => 'success',
-    //         'data' => $Pembayaran
-    //     ], 200);
-    // }
+        if ($validated['status'] === 'Tervalidasi') {
+            // Update nama dan tahap_user di tabel users
+            User::where('id', $validated['user_id'])->update([
+                'tahap_user' => 'Pendaftaran',
+            ]);
+        }
 
 
-    // public function destroy(Pembayaran $Pembayaran)
-    // {
-    //     $Pembayaran->delete();
-    //     return response()->json(
-    //         [
-    //             'message' => 'Pembayaran deleted successfully',
-    //             'status' => 'success'
-    //         ],
-    //         200
-    //     );
-    // }
+        // Update status & bukti (kalau ada)
+        $pembayaran->update($validated);
+
+        return response()->json([
+            'message' => 'Pembayaran berhasil diperbarui!',
+            'status' => 'success',
+            'data' => $pembayaran,
+        ], 200);
+    }
+
+    public function destroy(Pembayaran $Pembayaran)
+    {
+        $pembayaran = Pembayaran::findOrFail($Pembayaran->id);
+
+        // Hapus file jika ada
+        if ($pembayaran->bukti_pembayaran && file_exists(public_path($pembayaran->bukti_pembayaran))) {
+            unlink(public_path($pembayaran->bukti_pembayaran));
+        }
+
+        // Hapus data pembayaran
+        $pembayaran->delete();
+
+        return response()->json([
+            'message' => 'Pembayaran berhasil dihapus!',
+            'status' => 'success',
+        ], 200);
+    }
 }

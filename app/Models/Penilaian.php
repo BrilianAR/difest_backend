@@ -21,7 +21,7 @@ class Penilaian extends Model
      */
     public function karya()
     {
-        return $this->belongsTo(Karya::class, 'karya_id');
+        return $this->belongsTo(Karya::class);
     }
 
     /**
@@ -29,14 +29,14 @@ class Penilaian extends Model
      */
     public function daftarKriteria()
     {
-        return $this->belongsTo(DaftarKriteria::class, 'daftar_kriteria_id');
+        return $this->belongsTo(DaftarKriteria::class);
     }
 
     /**
-     * Relasi ke tabel juris
+     * Relasi ke tabel users sebagai juri
      */
     public function juri()
     {
-        return $this->belongsTo(Juri::class, 'juri_id');
+        return $this->belongsTo(User::class, 'juri_id');
     }
 }

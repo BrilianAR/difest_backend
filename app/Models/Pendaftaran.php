@@ -9,7 +9,7 @@ class Pendaftaran extends Model
 {
     //
     use HasFactory;
-    protected $table = 'pendaftaran';
+    protected $table = 'pendaftarans';
 
     protected $fillable = [
         'user_id',
@@ -19,6 +19,8 @@ class Pendaftaran extends Model
         'no_hp',
         'asal_institusi',
         'kartu_identitas_ketua',
+        'nama_team',
+        'bukti_pembayaran',
         'bukti_follow_ig_difest',
         'bukti_follow_ig_himatikom',
         'bukti_follow_tiktok_difest',

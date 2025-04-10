@@ -9,7 +9,7 @@ class Kriteria extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama'];
+    protected $fillable = ['nama', 'presentase'];
 
     /**
      * Relasi ke daftar_kriteria

@@ -12,7 +12,7 @@ class DaftarKriteria extends Model
     protected $fillable = [
         'kriteria_id',
         'lomba_id',
-        'user_id'
+        'jenis_kriteria',
     ];
 
     /**
@@ -29,10 +29,5 @@ class DaftarKriteria extends Model
     public function lomba()
     {
         return $this->belongsTo(Lomba::class, 'lomba_id');
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
     }
 }

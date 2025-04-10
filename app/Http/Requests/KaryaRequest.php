@@ -23,13 +23,13 @@ class KaryaRequest extends FormRequest
     {
         return [
             //
-            'pendaftaran_id' => 'required',
-            'judul_karya' => 'required|string',
-            'deskripsi' => 'required|string',
+            'pendaftaran_id' => 'nullable', //required
+            'lomba_id' => 'nullable', //required
+            'judul_karya' => 'nullable|string', //required
+            'deskripsi' => 'nullable|string', //required
             'karya' => 'nullable',
             'link_karya' => 'nullable',
-            'status_karya' => 'required|string',
-            'keaslian_karya' => 'required|string',
+            'keaslian_karya' => 'nullable', //required
         ];
     }
 }

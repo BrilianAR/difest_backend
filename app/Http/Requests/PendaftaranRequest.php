@@ -22,17 +22,18 @@ class PendaftaranRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'user_id' => 'required|exists:users,id',
-            'lomba_id' => 'required|exists:lomba,id',
-            'nama_ketua' => 'required|string|max:255',
-            'email' => 'required|email|unique:pendaftarans,email',
-            'no_hp' => 'required|string|max:15',
-            'asal_institusi' => 'required|string|max:255',
-            'kartu_identitas_ketua' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'bukti_follow_ig_difest' => 'required|file|mimes:jpg,jpeg,png|max:2048',
-            'bukti_follow_ig_himatikom' => 'required|file|mimes:jpg,jpeg,png|max:2048',
-            'bukti_follow_tiktok_difest' => 'required|file|mimes:jpg,jpeg,png|max:2048',
-            'bukti_subscribe_youtube_himatikom' => 'required|file|mimes:jpg,jpeg,png|max:2048',
+            'user_id' => 'nullable|exists:users,id',
+            'lomba_id' => 'nullable|exists:lomba,id',
+            'nama_ketua' => 'nullable|string|max:255',
+            'email' => 'nullable|email|unique:pendaftarans,email',
+            'no_hp' => 'nullable|string|max:15',
+            'asal_institusi' => 'nullable|string|max:255',
+            'kartu_identitas_ketua' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'bukti_pembayaran' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'bukti_follow_ig_difest' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'bukti_follow_ig_himatikom' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'bukti_follow_tiktok_difest' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
+            'bukti_subscribe_youtube_himatikom' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
         ];
 
         for ($i = 1; $i <= 4; $i++) {
@@ -49,8 +50,9 @@ class PendaftaranRequest extends FormRequest
     public function messages()
     {
         return [
-            'kartu_identitas_ketua.required' => 'Kartu identitas ketua harus diunggah.',
-            'bukti_follow_ig_difest.required' => 'Bukti follow IG Difest harus diunggah.',
+            'kartu_identitas_ketua.nullable' => 'Kartu identitas ketua harus diunggah.',
+            'bukti_pembayaran.nullable' => 'Bukti Pembayaran harus diunggah.',
+            'bukti_follow_ig_difest.nullable' => 'Bukti follow IG Difest harus diunggah.',
             'email.unique' => 'Email ini sudah terdaftar.',
         ];
     }

@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 
@@ -71,7 +72,6 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Login successfully',
-            'user' => $user->makeHidden(['password']),
             'token' => $token
         ], 201);
     }
@@ -101,8 +101,19 @@ class AuthController extends Controller
             }
             JWTAuth::invalidate($token);
             return response()->json(['massage' => 'Logout successfully'], 200);
-        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+        } catch (JWTException $e) {
             return response()->json(['error' => 'Failed to Logout'], 401);
+        }
+    }
+
+    public function refreshToken(Request $request)
+    {
+        try {
+            $refreshToken = $request->refresh_token;
+            $newToken = JWTAuth::setToken($refreshToken)->refresh();
+            return response()->json(['token' => $newToken]);
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Token refresh failed'], 401);
         }
     }
 }

@@ -26,7 +26,7 @@ class DaftarKriteriaRequest extends FormRequest
         return [
             'kriteria_id' => 'required|exists:kriterias,id',
             'lomba_id' => 'required|exists:lomba,id',
-            'user_id' => ['required', new IsJuri], // Pakai custom rule
+            'jenis_kriteria' => 'required',
         ];
     }
 
@@ -39,6 +39,7 @@ class DaftarKriteriaRequest extends FormRequest
             'kriteria_id.required' => 'Kriteria wajib dipilih.',
             'kriteria_id.exists' => 'Kriteria tidak valid.',
             'lomba_id.required' => 'Lomba wajib dipilih.',
+            'jenis_kriteria.required' => 'Jenis Kriteria wajib dipilih.',
             'lomba_id.exists' => 'Lomba tidak valid.',
         ];
     }
