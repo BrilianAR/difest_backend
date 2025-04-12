@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('karya');
             $table->text('link_karya')->nullable();
             $table->text('keaslian_karya');
-            $table->enum('status_karya', ['Belum Diverifikasi', 'Tidak Lolos', 'Lolos Tahap 1'])->default('Belum Diverifikasi');
+            $table->enum('status_karya', ['Belum Diverifikasi', 'Tidak Lolos', 'Lolos Tahap 1', 'Lima Besar'])->default('Belum Diverifikasi');
             $table->timestamps();
         });
     }

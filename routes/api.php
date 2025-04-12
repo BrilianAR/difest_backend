@@ -22,23 +22,23 @@ Route::apiResource('informasi', InformasiController::class);
 Route::post('/refresh', [AuthController::class, 'refreshToken']);
 
 Route::middleware(['jwt.auth'])->group(function () {
+    Route::apiResource('daftarKriteria', DaftarKriteriaController::class);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/admin/dashboard', [AdminController::class, 'index']);
     Route::apiResource('kriteria', KriteriaController::class);
-    Route::apiResource('daftarKriteria', DaftarKriteriaController::class);
     Route::apiResource('users', UserController::class);
 
     Route::apiResource('penilaian', PenilaianController::class);
     Route::apiResource('pembayaran', PembayaranController::class);
     Route::prefix('pendaftaran')->group(function () {
         Route::apiResource('/', PendaftaranController::class);
-    
+
         Route::post('/registrasi-1', [PendaftaranController::class, 'registrasiKetua']);
         Route::post('/registrasi-2', [PendaftaranController::class, 'registrasiAnggota']);
         Route::post('/registrasi-3', [PendaftaranController::class, 'registrasiPembayaran']);
         Route::post('/registrasi-4', [PendaftaranController::class, 'registrasiBuktiFollow']);
-    
-    
+
+
         Route::get('/{id}', [PendaftaranController::class, 'show']);
         Route::post('/{id}', [PendaftaranController::class, 'update']);
         Route::delete('/{id}', [PendaftaranController::class, 'destroy']);

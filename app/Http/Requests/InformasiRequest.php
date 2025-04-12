@@ -23,8 +23,8 @@ class InformasiRequest extends FormRequest
     {
         return [
             //
-            'judul' => 'required',
-            'deskripsi' => 'required',
+            'judul' => 'nullable',
+            'deskripsi' => 'nullable',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg',
             'file' => 'nullable|mimes:pdf,doc,docx,xlsx',
         ];

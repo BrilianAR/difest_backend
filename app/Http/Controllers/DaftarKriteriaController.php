@@ -105,11 +105,27 @@ class DaftarKriteriaController extends Controller
      */
     public function destroy($id)
     {
-        $daftarKriteria = DaftarKriteria::findOrFail($id);
-        $daftarKriteria->delete();
+        try {
+            // Cari daftar kriteria berdasarkan ID, jika tidak ditemukan, lempar exception
+            $daftarKriteria = DaftarKriteria::findOrFail($id);
 
-        return response()->json([
-            'message' => 'Daftar kriteria berhasil dihapus!'
-        ]);
+            // Hapus data
+            $daftarKriteria->delete();
+
+            // Respons jika penghapusan berhasil
+            return response()->json([
+                'message' => 'Daftar kriteria berhasil dihapus!'
+            ], 200); // Mengembalikan status 200 OK
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            // Jika ID tidak ditemukan
+            return response()->json([
+                'error' => 'Daftar kriteria tidak ditemukan!'
+            ], 404); // Mengembalikan status 404 Not Found
+        } catch (\Exception $e) {
+            // Menangani kesalahan umum lainnya
+            return response()->json([
+                'error' => 'Terjadi kesalahan saat menghapus data!'
+            ], 500); // Mengembalikan status 500 Internal Server Error
+        }
     }
 }
